@@ -18,13 +18,6 @@ Une application web simple et efficace permettant de gérer vos tâches quotidie
   - Restaurer une tâche supprimée
   - Supprimer définitivement une tâche
 
-## Prérequis
-
-- PHP 8.0 ou supérieur
-- Composer
-- Base de données MySQL/MariaDB
-- Serveur web (Apache/Nginx)
-
 ## Installation
 
 1. Clonez le dépôt :
