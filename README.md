@@ -1,66 +1,122 @@
-<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400" alt="Laravel Logo"></a></p>
+<p align="center"><a href="https://www.facebook.com/lartfricain" target="_blank"><img src="public\images\lartfricain.jpg" width="400" alt="Laravel Logo"></a></p>
 
-<p align="center">
-<a href="https://github.com/laravel/framework/actions"><img src="https://github.com/laravel/framework/workflows/tests/badge.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/dt/laravel/framework" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/v/laravel/framework" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
-</p>
+# Application de Gestion de Tâches
 
-## About Laravel
+Une application web simple et efficace permettant de gérer vos tâches quotidiennes. Cette application offre toutes les fonctionnalités essentielles de gestion de tâches, incluant l'ajout, la modification, la suppression, ainsi que la restauration des tâches supprimées.
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+## Fonctionnalités
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+- **Authentification complète** : Création de compte et connexion sécurisée
+- **Gestion des tâches** :
+  - Créer de nouvelles tâches
+  - Afficher la liste des tâches
+  - Consulter les détails d'une tâche
+  - Modifier une tâche existante
+  - Supprimer une tâche (mise en corbeille)
+- **Gestion de la corbeille** :
+  - Afficher les tâches supprimées
+  - Restaurer une tâche supprimée
+  - Supprimer définitivement une tâche
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
+## Prérequis
 
-## Learning Laravel
+- PHP 8.0 ou supérieur
+- Composer
+- Base de données MySQL/MariaDB
+- Serveur web (Apache/Nginx)
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework.
+## Installation
 
-You may also try the [Laravel Bootcamp](https://bootcamp.laravel.com), where you will be guided through building a modern Laravel application from scratch.
+1. Clonez le dépôt :
+   ```
+   git clone https://github.com/votre-nom/gestion-taches.git
+   cd gestion-taches
+   ```
 
-If you don't feel like reading, [Laracasts](https://laracasts.com) can help. Laracasts contains thousands of video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
+2. Installez les dépendances :
+   ```
+   composer install
+   ```
 
-## Laravel Sponsors
+3. Copiez le fichier d'environnement :
+   ```
+   cp .env.example .env
+   ```
 
-We would like to extend our thanks to the following sponsors for funding Laravel development. If you are interested in becoming a sponsor, please visit the [Laravel Partners program](https://partners.laravel.com).
+4. Configurez votre fichier `.env` avec vos informations de base de données.
 
-### Premium Partners
+5. Générez la clé d'application :
+   ```
+   php artisan key:generate
+   ```
 
-- **[Vehikl](https://vehikl.com/)**
-- **[Tighten Co.](https://tighten.co)**
-- **[WebReinvent](https://webreinvent.com/)**
-- **[Kirschbaum Development Group](https://kirschbaumdevelopment.com)**
-- **[64 Robots](https://64robots.com)**
-- **[Curotec](https://www.curotec.com/services/technologies/laravel/)**
-- **[Cyber-Duck](https://cyber-duck.co.uk)**
-- **[DevSquad](https://devsquad.com/hire-laravel-developers)**
-- **[Jump24](https://jump24.co.uk)**
-- **[Redberry](https://redberry.international/laravel/)**
-- **[Active Logic](https://activelogic.com)**
-- **[byte5](https://byte5.de)**
-- **[OP.GG](https://op.gg)**
+6. Exécutez les migrations pour créer les tables nécessaires :
+   ```
+   php artisan migrate
+   ```
 
-## Contributing
+7. Lancez le serveur de développement :
+   ```
+   php artisan serve
+   ```
 
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
+## Structure des routes
 
-## Code of Conduct
+### Routes d'authentification
 
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
+| Méthode | URI | Action | Nom de route |
+|---------|-----|--------|-------------|
+| GET | / | AuthController@login | login |
+| POST | / | AuthController@store | store |
+| GET | /register | AuthController@register | register |
+| POST | /register | AuthController@storeRegister | storeRegister |
+| GET | /logout | AuthController@logout | logout |
 
-## Security Vulnerabilities
+### Routes de gestion des tâches (protégées par authentification)
 
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
+| Méthode | URI | Action | Nom de route |
+|---------|-----|--------|-------------|
+| GET | /tasks | TaskController@index | tasks.index |
+| GET | /tasks/create | TaskController@create | tasks.create |
+| POST | /tasks | TaskController@store | tasks.store |
+| GET | /tasks/{task} | TaskController@show | tasks.show |
+| GET | /tasks/{task}/edit | TaskController@edit | tasks.edit |
+| PUT/PATCH | /tasks/{task} | TaskController@update | tasks.update |
+| DELETE | /tasks/{task} | TaskController@destroy | tasks.destroy |
+| GET | /Vos-tâches-supprimées | TaskController@tasksTrashed | tasksTrashed |
+| PUT | /tasks/{id}/restaurer | TaskController@restore | restore |
+| DELETE | /tasks/{id}/supprimer-définitivement | TaskController@forceDelete | forceDelete |
 
-## License
+## Guide d'utilisation
 
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+### Création de compte et connexion
+
+1. Accédez à la page d'accueil de l'application
+2. Si vous n'avez pas encore de compte, cliquez sur "S'inscrire" et remplissez le formulaire
+3. Une fois inscrit, connectez-vous avec vos identifiants
+
+### Gestion des tâches
+
+- **Ajouter une tâche** : Cliquez sur "Nouvelle tâche" et remplissez le formulaire
+- **Voir toutes les tâches** : Accédez à la page d'accueil après connexion
+- **Modifier une tâche** : Cliquez sur l'icône de modification à côté de la tâche concernée
+- **Supprimer une tâche** : Cliquez sur l'icône de suppression
+- **Voir les tâches supprimées** : Cliquez sur "Tâches supprimées" dans le menu
+
+### Gestion de la corbeille
+
+- **Restaurer une tâche** : Dans la liste des tâches supprimées, cliquez sur "Restaurer"
+- **Supprimer définitivement** : Dans la liste des tâches supprimées, cliquez sur "Supprimer définitivement"
+
+## Fonctionnement technique
+
+Cette application utilise le framework Laravel et implémente le modèle de soft delete pour la gestion des tâches supprimées. Cela signifie que lorsqu'une tâche est "supprimée", elle est simplement marquée comme telle dans la base de données, mais reste récupérable jusqu'à sa suppression définitive.
+
+### Contrôleurs principaux
+
+- **AuthController** : Gère l'authentification (connexion, inscription, déconnexion)
+- **TaskController** : Gère toutes les opérations liées aux tâches
+
+## Sécurité
+
+Toutes les routes de gestion des tâches sont protégées par un middleware d'authentification, ce qui signifie qu'un utilisateur doit être connecté pour accéder à ces fonctionnalités.
